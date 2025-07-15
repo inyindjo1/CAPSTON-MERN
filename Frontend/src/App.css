@@ -1,42 +1,103 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #dbeafe, #f3e8ff);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+}
+
+.App {
+  width: 90%;
+  max-width: 700px;
+  margin-top: 40px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
   text-align: center;
+  color: #4a148c;
+  margin-bottom: 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.search-bar input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.search-bar button {
+  width: 48%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #6a1b9a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 4%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.search-bar .reset-btn {
+  background-color: #ccc;
+  color: #333;
 }
 
-.card {
-  padding: 2em;
+.search-bar button:hover {
+  opacity: 0.9;
 }
 
-.read-the-docs {
-  color: #888;
+ul.job-list {
+  list-style: none;
+  padding: 0;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.job-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-left: 5px solid #6a1b9a;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.job-card h3 {
+  margin: 0;
+  color: #4a148c;
+}
+
+.job-card p {
+  margin: 4px 0;
+  color: #333;
+}
+
+.job-card a {
+  color: #1e40af;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.job-card a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
 }

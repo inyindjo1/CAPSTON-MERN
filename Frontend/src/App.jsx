@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// ==== FRONTEND (client/src/App.jsx) ====
+
+import React, { useEffect, useState } from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [externalJobs, setExternalJobs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [error, setError] = useState('');
+
+  async function fetchExternalJobs(term = '') {
+    const url = `https://linkedin-job-search-api.p.rapidapi.com/active-jb-1h?offset=0&query=${encodeURIComponent(term)}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-key': 'c21b8e863fmsh6a988e4c47b5b44p174683jsnad7a1dd6ec2f',
+        'x-rapidapi-host': 'linkedin-job-search-api.p.rapidapi.com'
+      }
+    };
+    try {
+      const res = await fetch(url, options);
+      const data = await res.json();
+      setExternalJobs(data.jobs || []);
+    } catch (err) {
+      console.error('Failed to load jobs:', err);
+      setError('Failed to load jobs');
+    }
+  }
+
+  const handleSearch = () => {
+    if (!searchTerm.trim()) {
+      setError('Please enter a search term.');
+      return;
+    }
+    setError('');
+    fetchExternalJobs(searchTerm);
+  };
+
+  const handleReset = () => {
+    setSearchTerm('');
+    setExternalJobs([]);
+    setError('');
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      <h1>Find Jobs</h1>
+
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search jobs..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button onClick={handleSearch}>Search</button>
+        <button className="reset-btn" onClick={handleReset}>Reset</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+      {error && <p className="error">{error}</p>}
+
+      <ul>
+        {externalJobs.map((job, index) => (
+          <li key={index} className="job-card">
+            <h3>{job.jobTitle}</h3>
+            <p><strong>Company:</strong> {job.companyName}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default App
+export default App;
