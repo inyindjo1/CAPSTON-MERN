@@ -1,6 +1,4 @@
-// ==== FRONTEND (client/src/App.jsx) ====
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
@@ -19,7 +17,7 @@ function SearchJobs() {
   const [error, setError] = useState('');
 
   async function fetchExternalJobs(term = '') {
-    let url = 'http://localhost:8080/api/external-jobs';
+    let url = 'https://www.arbeitnow.com/api/job-board-api';
     if (term.trim()) {
       url += `?search=${encodeURIComponent(term)}`;
     }
@@ -28,6 +26,7 @@ function SearchJobs() {
       const json = await res.json();
       setExternalJobs(json.data || []);
     } catch (err) {
+      console.error('Error loading jobs:', err);
       setError('Failed to load jobs');
     }
   }

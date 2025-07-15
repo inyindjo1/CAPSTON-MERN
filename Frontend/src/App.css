@@ -1,30 +1,119 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #dbeafe, #f3e8ff);
-}
+/* App.css */
 
 body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #dbeafe, #f3e8ff);
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  overflow-x: hidden;
+}
+
+.App-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.App {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 720px;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #4a148c;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.search-bar button {
+  padding: 0.75rem 1rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #6a1b9a;
+  color: #fff;
+}
+
+.reset-btn {
+  background-color: #ccc;
+  color: #000;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.job-list {
+  list-style: none;
+  padding: 0;
+}
+
+.job-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-left: 5px solid #6a1b9a;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.job-card h3 {
+  margin: 0 0 0.5rem;
+  color: #4a148c;
+}
+
+.job-card p {
+  margin: 0.25rem 0;
+}
+
+.job-card a {
+  color: #1e40af;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.job-card a:hover {
+  text-decoration: underline;
 }
 
 .nav {
-  width: 100%;
-  background: #6a1b9a;
-  color: white;
-  padding: 10px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  background-color: #ede7f6;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
 }
 
 .nav a {
-  color: white;
-  margin: 0 15px;
   text-decoration: none;
+  color: #4a148c;
   font-weight: bold;
 }
 
@@ -33,96 +122,10 @@ body {
 }
 
 .page {
-  text-align: center;
-  margin-top: 40px;
-}
-
-.App {
-  width: 90%;
-  max-width: 700px;
-  margin-top: 40px;
-  padding: 30px;
-  background-color: #ffffff;
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
   border-radius: 16px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
-
-h1 {
-  text-align: center;
-  color: #4a148c;
-  margin-bottom: 20px;
-}
-
-.search-bar input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.search-bar button {
-  width: 48%;
-  padding: 10px;
-  font-size: 16px;
-  background-color: #6a1b9a;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-right: 4%;
-}
-
-.search-bar .reset-btn {
-  background-color: #ccc;
-  color: #333;
-}
-
-.search-bar button:hover {
-  opacity: 0.9;
-}
-
-ul.job-list {
-  list-style: none;
-  padding: 0;
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-.job-card {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-left: 5px solid #6a1b9a;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.job-card h3 {
-  margin: 0;
-  color: #4a148c;
-}
-
-.job-card p {
-  margin: 4px 0;
-  color: #333;
-}
-
-.job-card a {
-  color: #1e40af;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.job-card a:hover {
-  text-decoration: underline;
-}
-
-.error {
-  color: red;
-  margin-top: 10px;
-  text-align: center;
-}
-
