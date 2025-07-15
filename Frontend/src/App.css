@@ -13,6 +13,30 @@ body {
   overflow-x: hidden;
 }
 
+.nav {
+  width: 100%;
+  background: #6a1b9a;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.nav a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.page {
+  text-align: center;
+  margin-top: 40px;
+}
+
 .App {
   width: 90%;
   max-width: 700px;
@@ -101,3 +125,4 @@ ul.job-list {
   margin-top: 10px;
   text-align: center;
 }
+

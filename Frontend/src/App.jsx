@@ -1,15 +1,23 @@
-// ==== FRONTEND (client/src/App.jsx) ====
-
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-function App() {
+function Home() {
+  return (
+    <div className="page">
+      <h2>Welcome to the Job Finder App</h2>
+      <p>Search jobs, view saved, or manage your posts.</p>
+    </div>
+  );
+}
+
+function SearchJobs() {
   const [externalJobs, setExternalJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState('');
 
   async function fetchExternalJobs(term = '') {
-    let url = 'https://www.arbeitnow.com/api/job-board-api';
+    let url = 'http://localhost:8080/api/external-jobs';
     if (term.trim()) {
       url += `?search=${encodeURIComponent(term)}`;
     }
@@ -41,7 +49,6 @@ function App() {
   return (
     <div className="App">
       <h1>Find Jobs</h1>
-
       <div className="search-bar">
         <input
           type="text"
@@ -52,10 +59,8 @@ function App() {
         <button onClick={handleSearch}>Search</button>
         <button className="reset-btn" onClick={handleReset}>Reset</button>
       </div>
-
       {error && <p className="error">{error}</p>}
-
-      <ul>
+      <ul className="job-list">
         {externalJobs.map((job, index) => (
           <li key={index} className="job-card">
             <h3>{job.position}</h3>
@@ -67,6 +72,33 @@ function App() {
         ))}
       </ul>
     </div>
+  );
+}
+
+function SavedJobs() {
+  return <div className="page"><h2>Saved Jobs</h2><p>Coming soon...</p></div>;
+}
+
+function ManageJobs() {
+  return <div className="page"><h2>Manage My Jobs</h2><p>Coming soon...</p></div>;
+}
+
+function App() {
+  return (
+    <Router>
+      <nav className="nav">
+        <Link to="/">Home</Link>
+        <Link to="/search">Search</Link>
+        <Link to="/saved">Saved</Link>
+        <Link to="/manage">Manage</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/search" element={<SearchJobs />} />
+        <Route path="/saved" element={<SavedJobs />} />
+        <Route path="/manage" element={<ManageJobs />} />
+      </Routes>
+    </Router>
   );
 }
 
