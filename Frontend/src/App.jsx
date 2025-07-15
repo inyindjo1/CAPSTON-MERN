@@ -12,7 +12,7 @@ function App() {
   }, []);
 
   async function fetchJobs() {
-    const res = await fetch('http://localhost:8080');
+    const res = await fetch('http://localhost:8080/api/jobs');
     const data = await res.json();
     setJobs(data);
   }
@@ -23,7 +23,7 @@ function App() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const res = await fetch('http://localhost:8080', {
+    const res = await fetch('http://localhost:8080/api/jobs', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
@@ -34,7 +34,7 @@ function App() {
   };
 
   const handleReset = async () => {
-    await fetch('http://localhost:8080', {
+    await fetch('http://localhost:8080/', {
       method: 'DELETE'
     });
     setJobs([]);
