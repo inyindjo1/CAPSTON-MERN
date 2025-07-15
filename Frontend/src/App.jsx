@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+// ==== FRONTEND (client/src/App.jsx) ====
+
+import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
@@ -26,7 +28,6 @@ function SearchJobs() {
       const json = await res.json();
       setExternalJobs(json.data || []);
     } catch (err) {
-      console.error('Error loading jobs:', err);
       setError('Failed to load jobs');
     }
   }
