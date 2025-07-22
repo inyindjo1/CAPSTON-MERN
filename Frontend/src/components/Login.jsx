@@ -1,6 +1,8 @@
+// === src/components/Login.jsx ===
 import React, { useState } from 'react';
+import '../App.css';
 
-function Login() {
+function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -10,12 +12,14 @@ function Login() {
       const res = await fetch('http://localhost:8080/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
+
       if (res.ok) {
-        setMessage('Login successful!');
+        setMessage(data.message);
+        onLogin(data.user);
       } else {
         setMessage(data.error || 'Login failed');
       }
@@ -25,12 +29,22 @@ function Login() {
   };
 
   return (
-    <div className="page">
-      <h2>Login</h2>
-      <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} /><br />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} /><br />
-      <button onClick={handleLogin}>Login</button>
-      {message && <p>{message}</p>}
+    <div className="app-wrapper">
+      <div className="app">
+        <div className="user-bar">
+          <span><strong>Username:</strong> {username}</span>
+          <span><strong>Password:</strong> {password}</span>
+        </div>
+        <div className="user-bar">
+          <span><strong>Username:</strong> {username}</span>
+          <span><strong>Password:</strong> {password}</span>
+        </div>
+        <h2>Login</h2>
+        <input placeholder="Username" onChange={e => setUsername(e.target.value)} />
+        <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+        <button onClick={handleLogin}>Login</button>
+        <p>{message}</p>
+      </div>
     </div>
   );
 }
