@@ -1,13 +1,12 @@
 # React + Vite
+Capstone Project Description – Job Finder App (MERN Stack)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+For my final capstone project, I developed a full-stack Job Finder web application using the MERN stack — MongoDB, Express.js, React, and Node.js. The purpose of this app is to help users register an account, log in securely, and explore a list of job postings fetched from an external API.
 
-Currently, two official plugins are available:
+The frontend is built using React and includes multiple routes for user registration, login, job searching, managing posts, and viewing saved jobs. I used React Router to manage page navigation and applied custom CSS styling to create a clean and user-friendly layout.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+On the backend, I used Node.js with Express to set up a REST API. MongoDB is used as the database to store registered users. The app supports user registration and login functionality, with helpful console logs to track success or error responses. I also used Mongoose to manage the database schema and connections efficiently.
 
-## Expanding the ESLint configuration
+For job listings, I integrated the ArbeitNow public API, allowing users to search and filter job postings in real time. I used fetch() with async/await for smooth API communication and included error handling to manage failed requests or invalid user inputs.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# CAPSTON-MERN
+This project demonstrates my understanding of full-stack development, including working with APIs, handling user authentication, managing frontend-backend connections, and using tools like dotenv for environment configuration. Overall, the project reflects my ability to build and deploy real-world applications using the MERN stack.
