@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import Login from './components/Login';
+import Register from './components/Register';
+
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
@@ -100,43 +103,6 @@ function ManageJobs() {
   return <div className="page"><h2>Manage My Jobs</h2><p>Coming soon...</p></div>;
 }
 
-function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-
-  const handleLogin = () => {
-    if (username === 'admin' && password === '1234') {
-      setMessage('Login successful!');
-      // You can redirect or store auth state here
-    } else {
-      setMessage('Invalid username or password');
-    }
-  };
-
-  return (
-    <div className="page">
-      <h2>Login</h2>
-      <div className="login-form">
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        /><br />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        /><br />
-        <button onClick={handleLogin}>Login</button>
-        {message && <p>{message}</p>}
-      </div>
-    </div>
-  );
-}
-
 function App() {
   console.log(' App component loaded');
   return (
@@ -146,14 +112,12 @@ function App() {
         <Link to="/search">Search</Link>
         <Link to="/saved">Saved</Link>
         <Link to="/manage">Manage</Link>
-        <Link to="/login">Login</Link>
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchJobs />} />
         <Route path="/saved" element={<SavedJobs />} />
         <Route path="/manage" element={<ManageJobs />} />
-        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
