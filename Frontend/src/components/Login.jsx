@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import '../App.css';
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
 
   const handleLogin = async () => {
+    console.log('🔑 Trying to login as:', username);
     try {
       const res = await fetch('http://localhost:8080/api/login', {
         method: 'POST',
@@ -15,41 +14,22 @@ function Login({ onLogin }) {
       });
 
       const data = await res.json();
-
-      if (res.ok) {
-        setMessage(data.message);
-        onLogin(data.user);
-      } else {
-        setMessage(data.error || 'Login failed');
-      }
+      if (!res.ok) throw new Error(data.error || 'Login failed');
+      console.log('Login success:', data.message);
+      alert(data.message);
+      onLogin();
     } catch (err) {
-      setMessage('Server error');
+      console.error(' Login error:', err.message);
+      alert(err.message);
     }
   };
 
   return (
-    <div className="search-container">
-      <div className="search-box">
-        <h2 className="search-title">Login</h2>
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          className="search-input"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <div className="search-buttons">
-          <button className="search-button" onClick={handleLogin}>Login</button>
-        </div>
-        {message && <p>{message}</p>}
-      </div>
+    <div>
+      <h2>Login</h2>
+      <input placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
 }

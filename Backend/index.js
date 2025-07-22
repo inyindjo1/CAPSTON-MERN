@@ -1,100 +1,76 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import Job from './Job.js';
-import User from './User.js'; // NEW
+import cors from 'cors';
+import User from './User.js';
 
 dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+app.use(cors());
 app.use(express.json());
 
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+async function connectToMongoDB() {
+  try {
+    console.log('🔌 Connecting to MongoDB...');
+    await mongoose.connect(process.env.MONGO_URL);
+    console.log(' Connected to MongoDB!');
+  } catch (error) {
+    console.error(' MongoDB connection error:', error.message);
+    process.exit(1);
+  }
+}
+await connectToMongoDB();
 
-// Home Route
+// Home route
 app.get('/', (req, res) => {
-  res.json('Job Finder (from server)');
+  console.log(' GET / called');
+  res.send(' Welcome to Job Finder API');
 });
 
-// ---------------- AUTH ROUTES ----------------
-
-// Register new user
+// Register user
 app.post('/api/register', async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const existing = await User.findOne({ username });
-    if (existing) return res.status(400).json({ error: 'User already exists' });
+  const { username, password } = req.body;
+  console.log(' Registering:', username);
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, password: hashedPassword });
+  try {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      console.log(' Username already exists');
+      return res.status(400).json({ error: 'Username already exists' });
+    }
+
+    const newUser = new User({ username, password });
     await newUser.save();
-    res.status(201).json({ message: 'User registered' });
+    console.log(' Registered:', username);
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
+    console.error(' Registration error:', err.message);
     res.status(500).json({ error: 'Registration failed' });
   }
 });
 
-// Login existing user
+// Login user
 app.post('/api/login', async (req, res) => {
+  const { username, password } = req.body;
+  console.log(' Login attempt:', username);
+
   try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
-    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+    const user = await User.findOne({ username, password });
+    if (!user) {
+      console.log(' Invalid credentials for:', username);
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
 
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
-
-    res.status(200).json({ message: 'Login successful' });
+    console.log(' Login successful:', username);
+    res.json({ message: 'Login successful' });
   } catch (err) {
+    console.error(' Login error:', err.message);
     res.status(500).json({ error: 'Login failed' });
   }
 });
 
-// ---------------- JOB ROUTES ----------------
-
-app.get('/api/jobs', async (req, res) => {
-  try {
-    const jobs = await Job.find();
-    res.json(jobs);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to load jobs' });
-  }
-});
-
-app.post('/api/jobs', async (req, res) => {
-  try {
-    const newJob = new Job(req.body);
-    await newJob.save();
-    res.status(201).json(newJob);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to create job' });
-  }
-});
-
-app.put('/api/jobs/:id', async (req, res) => {
-  try {
-    const updated = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(updated);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to update job' });
-  }
-});
-
-app.delete('/api/jobs/:id', async (req, res) => {
-  try {
-    await Job.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Job deleted' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to delete job' });
-  }
-});
-
-// Start Server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(` Server running at http://localhost:${PORT}`);
 });

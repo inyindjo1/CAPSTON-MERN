@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import '../App.css';
 
 function Register({ onRegister }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
 
   const handleRegister = async () => {
+    console.log('📝 Submitting registration for:', username);
     try {
       const res = await fetch('http://localhost:8080/api/register', {
         method: 'POST',
@@ -15,41 +14,22 @@ function Register({ onRegister }) {
       });
 
       const data = await res.json();
-
-      if (res.ok) {
-        setMessage(data.message);
-        onRegister(data.user);
-      } else {
-        setMessage(data.error || 'Registration failed');
-      }
+      if (!res.ok) throw new Error(data.error || 'Register failed');
+      console.log(' Registration success:', data.message);
+      alert(data.message);
+      onRegister();
     } catch (err) {
-      setMessage('Server error');
+      console.error(' Registration error:', err.message);
+      alert(err.message);
     }
   };
 
   return (
-    <div className="search-container">
-      <div className="search-box">
-        <h2 className="search-title">Register</h2>
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          className="search-input"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <div className="search-buttons">
-          <button className="search-button" onClick={handleRegister}>Register</button>
-        </div>
-        {message && <p>{message}</p>}
-      </div>
+    <div>
+      <h2>Register</h2>
+      <input placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <button onClick={handleRegister}>Register</button>
     </div>
   );
 }
