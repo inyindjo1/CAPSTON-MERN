@@ -1,7 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import Job from './Job.js'; 
+import bcrypt from 'bcrypt';
+import Job from './Job.js';
+import User from './User.js'; // NEW
 
 dotenv.config();
 
@@ -15,9 +17,46 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
+// Home Route
 app.get('/', (req, res) => {
   res.json('Job Finder (from server)');
 });
+
+// ---------------- AUTH ROUTES ----------------
+
+// Register new user
+app.post('/api/register', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const existing = await User.findOne({ username });
+    if (existing) return res.status(400).json({ error: 'User already exists' });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ username, password: hashedPassword });
+    await newUser.save();
+    res.status(201).json({ message: 'User registered' });
+  } catch (err) {
+    res.status(500).json({ error: 'Registration failed' });
+  }
+});
+
+// Login existing user
+app.post('/api/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
+
+    res.status(200).json({ message: 'Login successful' });
+  } catch (err) {
+    res.status(500).json({ error: 'Login failed' });
+  }
+});
+
+// ---------------- JOB ROUTES ----------------
 
 app.get('/api/jobs', async (req, res) => {
   try {
@@ -56,6 +95,7 @@ app.delete('/api/jobs/:id', async (req, res) => {
   }
 });
 
+// Start Server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
