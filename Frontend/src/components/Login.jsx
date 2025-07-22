@@ -5,7 +5,7 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    console.log('🔑 Trying to login as:', username);
+    console.log([' Attempting Login', `Username: ${username}`]);
     try {
       const res = await fetch('http://localhost:8080/api/login', {
         method: 'POST',
@@ -15,11 +15,12 @@ function Login({ onLogin }) {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Login failed');
-      console.log('Login success:', data.message);
+
+      console.log([' Login Success', `Message: ${data.message}`, `User ID: ${data.userId}`]);
       alert(data.message);
       onLogin();
     } catch (err) {
-      console.error(' Login error:', err.message);
+      console.error([' Login Error', err.message]);
       alert(err.message);
     }
   };
@@ -27,11 +28,21 @@ function Login({ onLogin }) {
   return (
     <div>
       <h2>Login</h2>
-      <input placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <input
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
       <button onClick={handleLogin}>Login</button>
     </div>
   );
 }
 
 export default Login;
+
