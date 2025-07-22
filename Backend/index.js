@@ -2,20 +2,23 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import User from './User.js';
+import User from './User.js'; // Make sure you have this file and schema
 
 dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// MongoDB Connection
 async function connectToMongoDB() {
   try {
     console.log('🔌 Connecting to MongoDB...');
     await mongoose.connect(process.env.MONGO_URL);
-    console.log(' Connected to MongoDB!');
+    console.log(' Successfully connected to MongoDB!');
   } catch (error) {
     console.error(' MongoDB connection error:', error.message);
     process.exit(1);
@@ -23,54 +26,32 @@ async function connectToMongoDB() {
 }
 await connectToMongoDB();
 
-// Home route
+// Root Route
 app.get('/', (req, res) => {
-  console.log(' GET / called');
-  res.send(' Welcome to Job Finder API');
+  res.send(' Welcome to the Job Finder API!');
 });
 
-// Register user
+//  Register Route
 app.post('/api/register', async (req, res) => {
   const { username, password } = req.body;
-  console.log(' Registering:', username);
-
   try {
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      console.log(' Username already exists');
-      return res.status(400).json({ error: 'Username already exists' });
+      console.log(` Username already taken: ${username}`);
+      return res.status(409).json({ error: 'Username already exists' });
     }
 
     const newUser = new User({ username, password });
     await newUser.save();
-    console.log(' Registered:', username);
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (err) {
-    console.error(' Registration error:', err.message);
-    res.status(500).json({ error: 'Registration failed' });
+    console.log(` Registered: ${username}, ID: ${newUser._id}`);
+    res.status(201).json({ message: 'User registered successfully', userId: newUser._id });
+  } catch (error) {
+    console.error(' Registration error:', error.message);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
-// Login user
-app.post('/api/login', async (req, res) => {
-  const { username, password } = req.body;
-  console.log(' Login attempt:', username);
-
-  try {
-    const user = await User.findOne({ username, password });
-    if (!user) {
-      console.log(' Invalid credentials for:', username);
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    console.log(' Login successful:', username);
-    res.json({ message: 'Login successful' });
-  } catch (err) {
-    console.error(' Login error:', err.message);
-    res.status(500).json({ error: 'Login failed' });
-  }
-});
-
+// Start Server
 app.listen(PORT, () => {
-  console.log(` Server running at http://localhost:${PORT}`);
+  console.log(` Server is running on http://localhost:${PORT}`);
 });
