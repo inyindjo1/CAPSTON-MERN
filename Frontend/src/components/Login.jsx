@@ -1,4 +1,3 @@
-// === src/components/Login.jsx ===
 import React, { useState } from 'react';
 import '../App.css';
 
@@ -29,21 +28,27 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div className="app-wrapper">
-      <div className="app">
-        <div className="user-bar">
-          <span><strong>Username:</strong> {username}</span>
-          <span><strong>Password:</strong> {password}</span>
+    <div className="search-container">
+      <div className="search-box">
+        <h2 className="search-title">Login</h2>
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          className="search-input"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <div className="search-buttons">
+          <button className="search-button" onClick={handleLogin}>Login</button>
         </div>
-        <div className="user-bar">
-          <span><strong>Username:</strong> {username}</span>
-          <span><strong>Password:</strong> {password}</span>
-        </div>
-        <h2>Login</h2>
-        <input placeholder="Username" onChange={e => setUsername(e.target.value)} />
-        <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-        <button onClick={handleLogin}>Login</button>
-        <p>{message}</p>
+        {message && <p>{message}</p>}
       </div>
     </div>
   );

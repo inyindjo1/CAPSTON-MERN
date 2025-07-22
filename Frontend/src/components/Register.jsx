@@ -28,17 +28,27 @@ function Register({ onRegister }) {
   };
 
   return (
-    <div className="app-wrapper">
-      <div className="app">
-        <div className="user-bar">
-          <span><strong>Username:</strong> {username}</span>
-          <span><strong>Password:</strong> {password}</span>
+    <div className="search-container">
+      <div className="search-box">
+        <h2 className="search-title">Register</h2>
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          className="search-input"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <div className="search-buttons">
+          <button className="search-button" onClick={handleRegister}>Register</button>
         </div>
-        <h2>Register</h2>
-        <input placeholder="Username" onChange={e => setUsername(e.target.value)} />
-        <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-        <button onClick={handleRegister}>Register</button>
-        <p>{message}</p>
+        {message && <p>{message}</p>}
       </div>
     </div>
   );

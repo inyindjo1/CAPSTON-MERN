@@ -5,6 +5,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function Home() {
+  console.log('Rendering Home page');
   return (
     <div className="page">
       <h2>Welcome to the Job Finder App</h2>
@@ -23,17 +24,21 @@ function SearchJobs() {
     if (term.trim()) {
       url += `?search=${encodeURIComponent(term)}`;
     }
+    console.log('🔍 Fetching jobs from:', url);
 
     try {
       const res = await fetch(url);
       const json = await res.json();
+      console.log(' Fetched jobs:', json.data);
       setExternalJobs(json.data || []);
     } catch (err) {
+      console.error(' Error fetching jobs:', err);
       setError('Failed to load jobs');
     }
   }
 
   const handleSearch = () => {
+    console.log('🔎 Searching for:', searchTerm);
     if (!searchTerm.trim()) {
       setError('Please enter a search term.');
       return;
@@ -43,6 +48,7 @@ function SearchJobs() {
   };
 
   const handleReset = () => {
+    console.log(' Resetting search');
     setSearchTerm('');
     setExternalJobs([]);
     setError('');
@@ -80,14 +86,17 @@ function SearchJobs() {
 }
 
 function SavedJobs() {
+  console.log('Rendering Saved Jobs');
   return <div className="page"><h2>Saved Jobs</h2><p>Coming soon...</p></div>;
 }
 
 function ManageJobs() {
+  console.log(' Rendering Manage Jobs');
   return <div className="page"><h2>Manage My Jobs</h2><p>Coming soon...</p></div>;
 }
 
 function App() {
+  console.log('App loaded');
   return (
     <Router>
       <nav className="nav">
