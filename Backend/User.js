@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-// Connect to MongoDB using async/await with try-catch
+
 async function connectToMongoDB() {
   try {
     console.log('🔌 Connecting to MongoDB...');

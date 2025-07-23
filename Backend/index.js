@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import User from './User.js'; // Make sure this path is correct
+import User from './User.js'; 
 
 dotenv.config();
 
@@ -24,7 +24,6 @@ async function connectToMongoDB() {
 }
 await connectToMongoDB();
 
-// REGISTER
 app.post('/api/register', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -44,7 +43,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// LOGIN 
+
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
   try {

@@ -3,7 +3,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 
 function Home() {
   console.log('Rendering Home page');
@@ -98,8 +98,9 @@ function ManageJobs() {
 
 function App() {
   console.log('App loaded');
+  const navigate = useNavigate() 
   return (
-    <Router>
+    <>
       <nav className="nav">
         <Link to="/">Home</Link>
         <Link to="/search">Search</Link>
@@ -113,10 +114,14 @@ function App() {
         <Route path="/search" element={<SearchJobs />} />
         <Route path="/saved" element={<SavedJobs />} />
         <Route path="/manage" element={<ManageJobs />} />
-        <Route path="/login" element={<Login onLogin={() => {}} />} />
-        <Route path="/register" element={<Register onRegister={() => {}} />} />
+        <Route path="/login" element={<Login onLogin={() => {
+          navigate ('/')
+        }} />} />
+        <Route path="/register" element={<Register onRegister={() => {
+          navigate ( '/')
+        }} />} />
       </Routes>
-    </Router>
+    </>
   );
 }
 
