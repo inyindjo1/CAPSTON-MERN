@@ -25,7 +25,7 @@ function SearchJobs() {
     if (term.trim()) {
       url += `?search=${encodeURIComponent(term)}`;
     }
-    console.log('🔍 Fetching jobs from:', url);
+    console.log(' Fetching jobs from:', url);
 
     try {
       const res = await fetch(url);
@@ -39,7 +39,7 @@ function SearchJobs() {
   }
 
   const handleSearch = () => {
-    console.log('🔎 Searching for:', searchTerm);
+    console.log(' Searching for:', searchTerm);
     if (!searchTerm.trim()) {
       setError('Please enter a search term.');
       return;
