@@ -4,6 +4,7 @@ import Register from './components/Register'; /* Register component */
 
 import './App.css'; /* Import CSS */
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom'; /* React Router imports */
+export const BASE_URL = Import.meta.env.VITE_BASE_URL
 
 function Home() {
   console.log('Rendering Home page');
@@ -69,7 +70,7 @@ function SearchJobs() {
           <button onClick={handleSearch}>Search</button>
           <button className="reset-btn" onClick={handleReset}>Reset</button>
         </div>
-        {error && <p className="error">{error}</p>} /* Display error */
+        {error && <p className="error">{error}</p>} 
         <ul className="job-list">
           {externalJobs.map((job, index) => (
             <li key={index} className="job-card box">
