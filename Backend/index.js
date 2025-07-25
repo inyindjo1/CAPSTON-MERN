@@ -63,6 +63,11 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Root route for API base path
+app.get('/', (req, res) => {
+  res.send('Job Finder API'); /* Return a simple response instead of "Cannot GET /" */
+});
+
 // This starts the server
 app.listen(PORT, () => {
   console.log(` Server running at http://localhost:${PORT}`); /* Log server start */

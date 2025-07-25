@@ -4,7 +4,7 @@ import Register from './components/Register'; /* Register component */
 
 import './App.css'; /* Import CSS */
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom'; /* React Router imports */
-export const BASE_URL = Import.meta.env.VITE_BASE_URL
+
 
 function Home() {
   console.log('Rendering Home page');

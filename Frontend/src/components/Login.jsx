@@ -39,7 +39,7 @@ function Login({ onLogin }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)} /* Update password */
       />
-      <button onClick={handleLogin}>Login</button> /* Submit login */
+      <button onClick={handleLogin}>Login</button> 
     </div>
   );
 }
