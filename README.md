@@ -1,7 +1,7 @@
 # React + Vite
 Capstone Project Description – Job Finder App (MERN Stack)
 
-For my final capstone project, I developed a full-stack Job Finder web application using the MERN stack — MongoDB, Express.js, React, and Node.js. The purpose of this app is to help users register an account, log in securely, and explore a list of job postings fetched from an external API.
+For my final capstone project, I developed a full-stack Job Finder web application using the MERN stack  MongoDB, Express.js, React, and Node.js. The purpose of this app is to help users register an account, log in securely, and explore a list of job postings fetched from an external API.
 
 The frontend is built using React and includes multiple routes for user registration, login, job searching, managing posts, and viewing saved jobs. I used React Router to manage page navigation and applied custom CSS styling to create a clean and user-friendly layout.
 
